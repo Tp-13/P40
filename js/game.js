@@ -37,32 +37,42 @@ class Game{
     
     play(){
         
-                form.hide();
+        form.hide();
 
-                Player.getPlayerInfo();
-                 image(back_img, 0, 0, 1000, 800);
-                 var x =100;
-                 var y=200;
-                 var index =0;
-                 drawSprites();
-                 for(var plr in allPlayers){
-                     //index = index+1;
-                     x = 500-allPlayers[plr].distance;
-                     y=500;
+        Player.getPlayerInfo();
+        image(back_img, 0, 0, 1000, 800);
+        var x =100;
+        var y=200;
+        var index =0;
+        drawSprites();
+        for(var plr in allPlayers){
+        //index = index+1;
+        x = 500-allPlayers[plr].distance;
+        y=500;
                      
-                     players[index -1].x = x;
-                     players[index - 1].y = y;
+        players[index -1].x = x;
+        players[index - 1].y = y;
                        
-                     if(index === player.index){
-                         
-                         var name = allPlayers[plr].name;
-                         var xPos = x;
-                         if (name.length > 5){
-                             xPos = xPos - ((name.length - 5)*10);
-                         }
-                     }
-                     text("Score" + player.score);
-                 }
+        if(index === player.index){                 
+            var name = allPlayers[plr].name;
+            var xPos = x;
+            if (name.length > 5){
+                xPos = xPos - ((name.length - 5)*10);
+            }
+        }
+
+        if(player.index !== null){
+            for(var i = 0; i<fruitGroup.length;i++){
+                if(fruitGroup.get(i).isTouching(players)){
+                    fruitGroup.get(i).destroy();
+                    player.score = player.score + 1;
+                    player.update();
+                }
+            }
+        }
+
+        text("Score" + player.score);
+    }
                 
                 
                  
